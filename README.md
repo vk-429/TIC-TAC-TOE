@@ -1,85 +1,123 @@
-# Tic Tac Toe Game
 
-This repository contains a console-based Tic Tac Toe game implemented in C. The game allows you to play in different modes: against a friend, against a smart computer, or against an evil computer.
+# Advanced TIC TAC TOE
+
+This repository contains an advanced implementation of the classic Tic Tac Toe game in C, featuring multiple gameplay modes, including player vs. player and player vs. AI. The AI can be customized to either play strategically (smart mode) or unfairly (evil mode), providing a diverse gaming experience. Additionally, color-coded console text enhances the visual feedback of the game.
 
 ## Table of Contents
 
-- [Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Game Modes](#game-modes)
-  - [Play with a Friend](#play-with-a-friend)
-  - [Play with Smart Computer](#play-with-smart-computer)
-  - [Play with Evil Computer](#play-with-evil-computer)
-- [Contributing](#contributing)
+- [Key Features](#key-features)
+- [Installation Guide](#installation-guide)
+- [How to Play](#how-to-play)
+- [Game Modes Explained](#game-modes-explained)
+  - [Player vs Player Mode](#player-vs-player-mode)
+  - [Smart Computer Mode](#smart-computer-mode)
+  - [Evil Computer Mode](#evil-computer-mode)
+- [Console Color Scheme](#console-color-scheme)
+- [Code Overview](#code-overview)
+- [Contributing to the Project](#contributing-to-the-project)
 - [License](#license)
 
-## Features
+## Key Features
 
-- Play against a friend in two-player mode.
-- Play against a smart computer that makes strategic moves.
-- Play against an evil computer that plays unfairly to ensure its victory.
-- Color-coded console text for a better user experience.
+- **Multiple AI Behaviors**: Play against a smart computer that anticipates your moves, or an evil computer that manipulates the game for its own benefit.
+- **Color-Coded Gameplay**: The game interface leverages color to differentiate between moves, prompts, warnings, and outcomes, enhancing the player's visual experience.
+- **Modular Design**: Each function in the game is modular and focused, making it easy to understand, modify, or extend for future functionality.
+- **Console Compatibility**: Designed to work in a variety of terminal environments with minimal dependencies beyond a standard C compiler.
+- **Cheat Detection**: Special modes where the AI can subtly manipulate the board to favor its own moves, offering a challenge for observant players.
 
-## Installation
+## Installation Guide
 
-To run this project, you need to have a C compiler installed on your system. Follow these steps to compile and run the program:
+To set up and run this project, follow the steps below:
 
-1. Clone the repository:
-    ```sh
-    git clone https://github.com/yourusername/your-repo-name.git
-    ```
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/yourusername/tic-tac-toe-advanced.git
+   ```
+   
+2. **Navigate to the Project Directory**:
+   ```bash
+   cd tic-tac-toe-advanced
+   ```
 
-2. Navigate to the project directory:
-    ```sh
-    cd your-repo-name
-    ```
+3. **Compile the Source Code**:  
+   To compile the game, use any C compiler that supports C99 or later. For example:
+   ```bash
+   gcc -o tic_tac_toe game_screen_normal.c game_screen_computer.c computers_turn.c main.c -std=c99
+   ```
 
-3. Compile the program:
-    ```sh
-    gcc -o tic_tac_toe tic_tac_toe.c -std=c99
-    ```
+4. **Run the Game**:
+   After compilation, run the game using:
+   ```bash
+   ./tic_tac_toe
+   ```
 
-4. Run the executable:
-    ```sh
-    ./tic_tac_toe
-    ```
+## How to Play
 
-## Usage
+Upon starting the program, you'll be prompted with a menu to choose from different game modes. Based on your selection, you'll either play against another player or the computer.
 
-After running the executable, you will be presented with a menu to choose the game mode. Follow the on-screen instructions to play the game.
+### Basic Controls:
+- **Player 1** and **Player 2** take turns marking the grid. The grid coordinates are entered as numbers (1-9) corresponding to different cells.
+- **Objective**: Align three of your marks (`O` or `X`) either horizontally, vertically, or diagonally before your opponent.
 
-## Game Modes
+## Game Modes Explained
 
-### Play with a Friend
+### Player vs Player Mode
 
-- Select the option to play with a friend.
-- Enter the names of both players.
-- Take turns to place your mark (`O` for player 1 and `X` for player 2) on the board.
-- The game continues until one player wins or the board is full (draw).
+- In this mode, two human players can challenge each other on the same computer.
+- Players take turns entering their moves, and the game alternates between player `O` and player `X`.
+- The first player to align three marks wins, or the game ends in a draw if the board is filled without a winner.
 
-### Play with Smart Computer
+### Smart Computer Mode
 
-- Select the option to play with the smart computer.
-- Enter your name.
-- Take turns to place your mark (`O`) on the board.
-- The computer will play strategically to either win or block your moves.
+- In this mode, you’ll compete against a strategic AI.
+- The smart computer evaluates the game board using basic algorithms such as **Minimax**, choosing optimal moves to block the player or win the game.
+- This mode is ideal for players looking to practice against an AI that doesn’t cheat but still provides a significant challenge.
 
-### Play with Evil Computer
+### Evil Computer Mode
 
-- Select the option to play with the evil computer.
-- Enter your name.
-- Take turns to place your mark (`O`) on the board.
-- The computer will play unfairly to ensure its victory.
+- This mode takes the competition to another level by introducing a cheating AI.
+- The evil AI is designed to modify the board behind the scenes, skewing the game in its favor and ensuring a near-certain victory.
+- Can you outsmart a computer that bends the rules? Test your observation skills here!
 
-## Contributing
+## Console Color Scheme
 
-If you want to contribute to this project, please follow these steps:
+To improve the gaming experience, the game uses a **color-coded system** for different elements:
+
+- **Player O Moves**: Displayed in **white**.
+- **Player X Moves**: Displayed in **red**.
+- **Game Prompts**: Displayed in **green** for instructions and general flow.
+- **Error Messages**: Displayed in **yellow**, indicating invalid moves or actions.
+- **Winning/Draw Messages**: Displayed in **green** for a clean victory, and **red** if the evil computer cheats you out of a win.
+
+```c
+// Example Color Definitions
+#define BLUE_COLOR_TEXT SetConsoleTextAttribute(hConsole, 9);
+#define RED_COLOR_TEXT SetConsoleTextAttribute(hConsole, 12);
+#define GREEN_COLOR_TEXT SetConsoleTextAttribute(hConsole, 2);
+#define YELLOW_COLOR_TEXT SetConsoleTextAttribute(hConsole, 14);
+```
+
+## Code Overview
+
+This project is organized into modular components:
+
+- **main.c**: The entry point of the application, managing the overall flow of the game.
+- **game_screen_normal.c**: Handles gameplay logic for the Player vs Player mode.
+- **game_screen_computer.c**: Manages the logic for AI-based modes (smart and evil).
+- **computers_turn.c**: Contains logic for the computer's turn, including strategies for the smart and evil modes.
+- **game_helpers.c**: A utility file with helper functions for printing the board, validating moves, and checking game state.
+  
+This modular approach enables easy debugging and future expansions. Adding new AI behaviors or additional features will require minimal changes to the core structure.
+
+## Contributing to the Project
+
+Contributions are welcome! If you'd like to contribute:
 
 1. Fork the repository.
-2. Create a new branch (`git checkout -b feature/your-feature`).
-3. Make your changes.
-4. Commit your changes (`git commit -m 'Add some feature'`).
-5. Push to the branch (`git push origin feature/your-feature`).
-6. Open a pull request.
+2. Create a new branch (`git checkout -b feature/some-feature`).
+3. Commit your changes (`git commit -am 'Add some feature'`).
+4. Push to the branch (`git push origin feature/some-feature`).
+5. Open a pull request to discuss and review your changes.
+
+We encourage contributions that add new AI modes, improve the UI, or optimize the game engine.
 
